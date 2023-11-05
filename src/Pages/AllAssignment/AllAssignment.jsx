@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react";
 import AssignmentCard from "../../Components/AssignmentCard/AssignmentCard";
+import axios from "axios";
 
 const AllAssignment = () => {
-  //   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [levelValue, setLevelValue] = useState("All");
   const [level, setLevel] = useState("All");
   const [assignments, setAssignments] = useState([]);
-
+console.log(level);
+ 
   useEffect(() => {
-    fetch(`http://localhost:5006/AddAssignment?level=${level}`)
-      .then((res) => res.json())
-      .then((data) => setAssignments(data));
+    axios.get(`http://localhost:5006/AddAssignmentQuery?level=${level}`)
+      .then((data) => setAssignments(data.data));
   }, [level]);
 
   const handleChangeLevel = (e) => {
     const LevelValue = e.target.value;
-    const lowerCaseValue = LevelValue.toLowerCase();
+    const lowerCaseValue = LevelValue;
     setLevelValue(LevelValue);
     setLevel(lowerCaseValue);
   };
@@ -37,12 +37,17 @@ const AllAssignment = () => {
 
       <div className="w-[85%] mx-auto my-20">
         <div className="products-container w-[80rem] grid grid-cols-1 lg:grid-cols-2 gap-20">
-          {assignments.map((assignment) => (
+          {
+            
+            assignments?.map((assignment) => (
             <AssignmentCard
               key={assignment._id}
               assignment={assignment}
             ></AssignmentCard>
-          ))}
+          ))
+          }
+          {/* :
+          <p className="text-5xl">No Assignment Published Yet.</p> */}
         </div>
       </div>
     </div>

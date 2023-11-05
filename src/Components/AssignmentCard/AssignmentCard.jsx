@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 
-// import axios from "axios";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import useCustomeHook from "../../Hooks/useCustomeHook";
 
@@ -10,11 +10,31 @@ const AssignmentCard = ({ assignment }) => {
 
   const currentUser = user?.email || "No user";
 
-  //     const handleDetails = () => {
-  //     console.log(_id);
-  //     axios.get(`http://localhost:5006/details/${_id}`,(_id))
-  //     .then(data=>console.log(data))
-  //   };
+  const handleDelete = () => {
+
+    axios
+    .delete(`http://localhost:5006/delete/${_id}`, _id, {
+      withCredentials: true,
+    })
+    .then((data) => {
+      console.log(data);
+      // const remain = items.filter((datas) => datas._id !== id);
+      // if (data.data.acknowledged) {
+      //   setItems(remain);
+      //   Swal.fire("Deleted!", "Your file has been deleted.", "success");
+      // }
+    });
+
+    // fetch('http://localhost:5006/delete',{
+    //   method:'DELETE',
+    //   headers:{
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(_id),
+    // })
+    // axios.delete("http://localhost:5006/delete", _id)
+    //   .then((data) => console.log(data));
+  };
   // onClick={handleDetails}
 
   return (
@@ -31,8 +51,15 @@ const AssignmentCard = ({ assignment }) => {
           </Link>
           {currentUser === PostedUser ? (
             <>
-              <Link to={`/update/${_id}`}><button className="btn bg-[#FE834C] text-white">Update</button></Link>
-              <button className="btn bg-[#FE834C] text-white">Delete</button>
+              <Link to={`/update/${_id}`}>
+                <button className="btn bg-[#FE834C] text-white">Update</button>
+              </Link>
+              <button
+                onClick={handleDelete}
+                className="btn bg-[#FE834C] text-white"
+              >
+                Delete
+              </button>
             </>
           ) : (
             <>
