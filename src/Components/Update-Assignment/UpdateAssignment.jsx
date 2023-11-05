@@ -1,20 +1,25 @@
+import { useLoaderData } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import useCustomeHook from "../../Hooks/useCustomeHook";
 
-const CreateAssignment = () => {
-  const [startDate, setStartDate] = useState(new Date());
-  const [level, setLevel] = useState("Easy");
+const UpdateAssignment = () => {
+  const Assignments = useLoaderData();
+  const { _id, Tittle, level, Marks, startDate, description, photo } =
+    Assignments;
+  const date = new Date(startDate);
+  const [updateDate, setStartDate] = useState(date);
+  const [updateLevel, setUpdateLevel] = useState(level);
   const { user } = useCustomeHook();
   const PostedUser = user.email;
 
   const handleChangePage = (e) => {
-    setLevel(e.target.value);
+    setUpdateLevel(e.target.value);
   };
 
-  const handleAdd = (e) => {
+  const handleUpdate = (e) => {
     e.preventDefault();
     const form = e.target;
     const Tittle = form.tittle.value;
@@ -22,48 +27,32 @@ const CreateAssignment = () => {
     const Date = document.getElementById("date").value;
     const Marks = parseFloat(form.marks.value);
     const photo = form.photo.value;
-
-    const fullForm = {
-      PostedUser,
-      Tittle,
-      level,
-      Marks,
-      Date,
-      description,
-      photo,
-      startDate,
-    };
-    const isNotEmpty = Object.values(fullForm).some((value) => value === "");
-
-    if (!isNotEmpty) {
-      fetch("http://localhost:5006/AddAssignment", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(fullForm),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.acknowledged) {
-            form.reset();
-            Swal.fire("Yeahh!", "Successfully added product", "success");
-          } else {
-            alert("Failed to add the product");
-          }
-        });
-    } else {
-      Swal.fire("Opps!", "You should fill in the entire form", "error");
-    }
+    const startDate = updateDate;
+    const fullForm = {PostedUser,Tittle,level,Marks,Date,description,photo,startDate};
+  
+    fetch(`http://localhost:5006/details/${_id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(fullForm),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.modifiedCount > 0) {
+          form.reset();
+          Swal.fire("Yeahh!", "Successfully Update product", "success");
+        }
+      });
   };
 
   return (
     <div>
       <h1 className="text-2xl md:text-3xl lg:text-5xl font-bold text-center mt-10 underline">
-        Posting Assignment{" "}
+        Updating Assignment{" "}
       </h1>
       <form
-        onSubmit={handleAdd}
+        onSubmit={handleUpdate}
         className="lg:w-3/5 mx-auto bg-[#FE834C33] p-10 my-10 rounded-lg"
       >
         <div className=" flex flex-col lg:flex-row gap-12 mb-10">
@@ -72,6 +61,7 @@ const CreateAssignment = () => {
               Tittle
             </span>
             <input
+              defaultValue={Tittle}
               name="tittle"
               type="text"
               placeholder="Tittle"
@@ -86,6 +76,7 @@ const CreateAssignment = () => {
               Marks
             </span>
             <input
+              defaultValue={Marks}
               name="marks"
               type="text"
               placeholder="Marks"
@@ -99,7 +90,7 @@ const CreateAssignment = () => {
             <DatePicker
               id="date"
               className="input input-bordered lg:w-[17rem] md:w-[27rem] w-[15rem] rounded-tl-none rounded-bl-none text-[#a8a6a6]"
-              selected={startDate}
+              selected={updateDate}
               onChange={(date) => setStartDate(date)}
             />
           </label>
@@ -111,6 +102,7 @@ const CreateAssignment = () => {
               Image URL
             </span>
             <input
+              defaultValue={photo}
               name="photo"
               className="w-full input input-bordered input-md"
               type="text"
@@ -122,7 +114,8 @@ const CreateAssignment = () => {
               Level
             </span>
             <select
-              value={level}
+              defaultValue={updateLevel}
+              value={updateLevel}
               onChange={handleChangePage}
               className="input input-bordered w-full"
             >
@@ -139,6 +132,7 @@ const CreateAssignment = () => {
               Description
             </span>
             <textarea
+              defaultValue={description}
               id="Textarea"
               className="textarea w-full"
               placeholder="Enter your description"
@@ -156,4 +150,4 @@ const CreateAssignment = () => {
   );
 };
 
-export default CreateAssignment;
+export default UpdateAssignment;

@@ -9,6 +9,8 @@ import PrivateRoute from "../Private/PrivateRoute";
 import CreateAssignment from "../Pages/CreateAssignment/CreateAssignment";
 import MyAssignment from "../Pages/MyAssignment/MyAssignment";
 import SubmittedAssignment from "../Pages/SubmittedAssignment/SubmittedAssignment";
+import Details from "../Components/DetailsAssignment/Details";
+import UpdateAssignment from "../Components/Update-Assignment/UpdateAssignment";
 
 
 
@@ -26,7 +28,6 @@ const Routes = createBrowserRouter([
       {
         path: "/All-Assignment",
         element: <AllAssignment></AllAssignment>,
-       
       },
       {
         path: "/Create-Assignment",
@@ -41,6 +42,18 @@ const Routes = createBrowserRouter([
       {
         path: "/Submitted-Assignment",
         element: <PrivateRoute><SubmittedAssignment></SubmittedAssignment></PrivateRoute>,
+       
+      },
+      {
+        path: "/details/:id",
+        element: <PrivateRoute><Details></Details></PrivateRoute>,
+        loader:({params})=>fetch(`http://localhost:5006/details/${params.id}`),
+       
+      },
+      {
+        path: "/update/:id",
+        element: <PrivateRoute><UpdateAssignment></UpdateAssignment></PrivateRoute>,
+        loader:({params})=>fetch(`http://localhost:5006/details/${params.id}`),
        
       },
       {

@@ -56,22 +56,22 @@ const AuthProvider = ({ children }) => {
       setUser(currentUser);
       const sendingUser = {email: user?.email }
       setLoading(false);
-      // console.log("i am User",user);
+      
       if (currentUser) {
-        // console.log(currentUser);
+       
         axios
-          .post("http://localhost:5005/jwt", sendingUser, { withCredentials: true })
+          .post("http://localhost:5006/jwt", sendingUser, { withCredentials: true })
           .then(() => {
-            // console.log(res.data);
+           
           });
       } else {
         
         axios
-          .post("http://localhost:5005/logout-jwt",sendingUser, {
+          .post("http://localhost:5006/logout-jwt",sendingUser, {
             withCredentials: true,
           })
           .then(() => {
-            // console.log(res.data);
+           
           });
       }
     });
