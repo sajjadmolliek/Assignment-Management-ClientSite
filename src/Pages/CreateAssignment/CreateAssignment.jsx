@@ -49,7 +49,7 @@ const CreateAssignment = () => {
             form.reset();
             Swal.fire("Yeahh!", "Successfully added product", "success");
           } else {
-            alert("Failed to add the product");
+            Swal.fire("OPPS!!","Failed to add the product","error");
           }
         });
     } else {

@@ -1,33 +1,46 @@
-import { useLoaderData, } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 // import Swal from "sweetalert2";
 import useCustomeHook from "../../Hooks/useCustomeHook";
+import axios from "axios";
+import Swal from "sweetalert2";
+import { useState } from "react";
 
 const Details = () => {
   // const { id } = useParams();
   const Assignments = useLoaderData();
-  const {user} = useCustomeHook()
+  const { user } = useCustomeHook();
   const currentUser = user.email;
   const { _id, PostedUser, Tittle, level, Marks, Date, description, photo } =
-  Assignments;
+    Assignments;
   // const fullForm = {name,brand_name,type,price,description,rating,photo,}
+  const [from, setFrom] = useState({});
+  const [valueFrom, setvalueFrom] = useState({});
 
-    const handleSubmitButton = (e) => {
-      e.preventDefault()
-      const Url = e.target.Url.value
-      const Note = document.getElementById("Textarea").value;
-      console.log(Url,Note);
-  //     console.log(_id);
-  //     axios.get(`http://localhost:5006/details${_id}`)
-  //     .then(data=>console.log(data))
-    };
-  // onClick={handleDetails}
+  const handleSubmitButton = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const Url = form.Url.value;
+    const Note = document.getElementById("Textarea").value;
+    const assignmentSubmitData = { currentUser, Url, Note };
+    setFrom(assignmentSubmitData);
+    setvalueFrom(form);
+  };
+  
+  axios.post("http://localhost:5006/SubmitAssignment", from).then((data) => {
+    if (data.data.acknowledged) {
+      valueFrom.reset();
+      Swal.fire("Yeahh!", "Successfully added product", "success");
+    } else {
+      Swal.fire("OPPS!!", "Failed to add the product", "error");
+    }
+  });
 
   return (
     <div>
       <div key={_id}>
-        <div className="card card-side bg-base-100 my-20 p-10 shadow-xl shadow-[#FE834C] w-[55rem] mx-auto">
+        <div className="md:card md:flex-row card-side bg-base-100 my-20 p-10 shadow-xl md:shadow-[#FE834C] w-[22rem] md:w-[45rem] lg:w-[55rem] mx-auto">
           <figure>
-            <img className="w-[30rem]" src={photo} alt="Assignment" />
+            <img className="md:w-[30rem]" src={photo} alt="Assignment" />
           </figure>
           <div className="card-body">
             <h2 className="card-title">
@@ -42,7 +55,6 @@ const Details = () => {
             <dialog id="my_modal_3" className="modal">
               <div className="modal-box">
                 <form method="dialog">
-                  {/* if there is a button in form, it will close the modal */}
                   <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
                     ✕
                   </button>
@@ -69,8 +81,13 @@ const Details = () => {
                       placeholder="Enter your text here ..."
                     ></textarea>
                   </label>
-                  <div>
-                    <button className="btn bg-[#FE834C] text-white" type="submit" >Submit</button> 
+                  <div className="flex justify-center items-center mt-10">
+                    <button
+                      className="btn bg-[#FE834C] text-white"
+                      type="submit"
+                    >
+                      Submit
+                    </button>
                   </div>
                 </form>
               </div>
@@ -79,17 +96,18 @@ const Details = () => {
             {/* Modal Closed */}
 
             <div className="flex justify-start items-center gap-8">
-            {currentUser === PostedUser? "" :
-              <button
-                className="btn bg-[#FE834C] text-white"
-                onClick={() =>
-                  document.getElementById("my_modal_3").showModal()
-                }
-              >
-                Take Assignment
-              </button>
-             }
-              
+              {currentUser === PostedUser ? (
+                ""
+              ) : (
+                <button
+                  className="btn bg-[#FE834C] text-white"
+                  onClick={() =>
+                    document.getElementById("my_modal_3").showModal()
+                  }
+                >
+                  Take Assignment
+                </button>
+              )}
             </div>
           </div>
         </div>

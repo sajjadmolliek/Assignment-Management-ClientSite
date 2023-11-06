@@ -25,7 +25,6 @@ const AuthProvider = ({ children }) => {
   const [userPhoto, setUserPhoto] = useState(null);
   const [findShoes, setFindShoes] = useState([]);
 
-  
   // Create User by email and Password
   const userCreateByEmailPassword = (email, password) => {
     setLoading(true);
@@ -54,25 +53,26 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      const sendingUser = {email: user?.email }
+      const sendingUser = { email: user?.email };
       setLoading(false);
-      
+
       if (currentUser) {
-       
         axios
-          .post("http://localhost:5006/jwt", sendingUser, { withCredentials: true })
-          .then(() => {
-           
-          });
-      } else {
-        
-        axios
-          .post("http://localhost:5006/logout-jwt",sendingUser, {
+          .post("http://localhost:5006/jwt", sendingUser, {
             withCredentials: true,
           })
           .then(() => {
-           
+            // const maxAge = data.data.age;
+            // console.log(maxAge);
+            // const currentTime = new Date().getTime();
+            
           });
+      } else {
+        axios
+          .post("http://localhost:5006/logout-jwt", sendingUser, {
+            withCredentials: true,
+          })
+          .then(() => {});
       }
     });
 
@@ -86,7 +86,6 @@ const AuthProvider = ({ children }) => {
   updateProfile(auth.currentUser, {
     displayName: userName,
     photoURL: userPhoto,
-    
   })
     .then()
     .catch();
@@ -106,10 +105,8 @@ const AuthProvider = ({ children }) => {
     // passing setFindShoes() to Received Finding Shoes by clicking 6 by one card
     setFindShoes,
     // Passing Finding Shoes to use
-    findShoes
+    findShoes,
   };
-
-
 
   return (
     <AuthContext.Provider value={passValue}>{children}</AuthContext.Provider>

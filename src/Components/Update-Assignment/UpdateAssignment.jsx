@@ -1,4 +1,4 @@
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useState } from "react";
 import DatePicker from "react-datepicker";
@@ -14,6 +14,7 @@ const UpdateAssignment = () => {
   const [updateLevel, setUpdateLevel] = useState(level);
   const { user } = useCustomeHook();
   const PostedUser = user.email;
+  const navigate = useNavigate()
 
   const handleChangePage = (e) => {
     setUpdateLevel(e.target.value);
@@ -42,6 +43,7 @@ const UpdateAssignment = () => {
         if (data.modifiedCount > 0) {
           form.reset();
           Swal.fire("Yeahh!", "Successfully Update product", "success");
+          navigate("/All-Assignment");
         }
       });
   };
@@ -143,7 +145,7 @@ const UpdateAssignment = () => {
         <input
           className="w-full text-center btn text-white text-bold text-lg bg-[#FE834C]"
           type="submit"
-          value="Post Assignment"
+          value="Update Assignment"
         />
       </form>
     </div>
