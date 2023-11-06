@@ -11,6 +11,7 @@ import MyAssignment from "../Pages/MyAssignment/MyAssignment";
 import SubmittedAssignment from "../Pages/SubmittedAssignment/SubmittedAssignment";
 import Details from "../Components/DetailsAssignment/Details";
 import UpdateAssignment from "../Components/Update-Assignment/UpdateAssignment";
+import GiveMarks from "../Components/GiveMarks/GiveMarks";
 
 
 
@@ -37,7 +38,6 @@ const Routes = createBrowserRouter([
       {
         path: "/My-Assignment",
         element: <PrivateRoute><MyAssignment></MyAssignment></PrivateRoute>,
-        // loader:()=>fetch(`http://localhost:5006/SubmitAssignmentQuery`),
        
       },
       {
@@ -50,6 +50,12 @@ const Routes = createBrowserRouter([
         path: "/details/:id",
         element: <PrivateRoute><Details></Details></PrivateRoute>,
         loader:({params})=>fetch(`http://localhost:5006/details/${params.id}`),
+       
+      },
+      {
+        path: "/GiveMarks/:id",
+        element: <PrivateRoute><GiveMarks></GiveMarks></PrivateRoute>,
+        loader:({params})=>fetch(`http://localhost:5006/SubmitAssignment/${params.id}`),
        
       },
       {

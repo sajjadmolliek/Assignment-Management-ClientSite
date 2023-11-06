@@ -43,13 +43,13 @@ const MyAssignment = () => {
                 </p>
                 <p className="text-2xl font-bold">
                   <span className="text-lg font-semibold">Obtain Marks:</span>{" "}
-                  {/* {assignment.Marks} */}0
+                  {assignment?.ObtainMarks? assignment?.ObtainMarks: "Result Not Published Yet"}
                 </p>
                 <p className="text-2xl font-bold">
                   <span className="text-lg font-semibold">
                     Assignment Status:
                   </span>{" "}
-                  Pending
+                  {assignment?.Feedback? assignment?.Feedback: "Pending"} 
                 </p>
                 <p className="text-2xl font-bold">
                   <span className="text-lg font-semibold">Feedback:</span>{" "}
