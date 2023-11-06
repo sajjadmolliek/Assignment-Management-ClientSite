@@ -13,27 +13,33 @@ const Details = () => {
   const SubmitterName = user.displayName;
   const { _id, PostedUser, Tittle, level, Marks, Date, description, photo } =
     Assignments;
- 
- 
+
 
   const handleSubmitButton = (e) => {
     e.preventDefault();
     const form = e.target;
     const Url = form.Url.value;
     const Note = document.getElementById("Textarea").value;
-    const assignmentSubmitData = { currentUser,Tittle,Marks,SubmitterName, Url, Note };
+    const assignmentSubmitData = {
+      currentUser,
+      Tittle,
+      Marks,
+      SubmitterName,
+      Url,
+      Note,
+    };
 
-    axios.post("http://localhost:5006/SubmitAssignment", assignmentSubmitData).then((data) => {
-    if (data.data.acknowledged) {
-      form.reset();
-      toast.success(" Assignment Submitted Successfully");
-    } else {
-      toast.error("Failed to add the product");
-    }
-  });
+    axios
+      .post("http://localhost:5006/SubmitAssignment", assignmentSubmitData)
+      .then((data) => {
+        if (data.data.acknowledged) {
+          form.reset();
+          toast.success(" Assignment Submitted Successfully");
+        } else {
+          toast.error("Failed to add the product");
+        }
+      });
   };
-  
-  
 
   return (
     <div>
@@ -80,11 +86,12 @@ const Details = () => {
                       id="Textarea"
                       className="textarea textarea-bordered w-full"
                       placeholder="Enter your text here ..."
+                      required
                     ></textarea>
                   </label>
                   <div className="flex justify-center items-center mt-10">
                     <button
-                      className="btn bg-[#FE834C] text-white"
+                      className="w-full btn bg-[#FE834C] text-white"
                       type="submit"
                     >
                       Submit
@@ -113,7 +120,7 @@ const Details = () => {
           </div>
         </div>
       </div>
-                <ToastContainer />
+      <ToastContainer />
     </div>
   );
 };

@@ -78,7 +78,7 @@ const AllAssignment = () => {
           <option value="Medium">Medium</option>
           <option value="Hard">Hard</option>
         </select>
-        <p className="text-xl md:text-4xl font-bold italic text-center">
+        <p className="text-xl md:text-4xl font-bold italic text-center p-20">
           No Relevant Assignment Published Yet.
         </p>
       </div>

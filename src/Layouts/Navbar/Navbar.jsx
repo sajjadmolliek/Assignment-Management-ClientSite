@@ -4,7 +4,6 @@ import useCustomeHook from "../../Hooks/useCustomeHook";
 import logo from "../../assets/logo.png";
 import { useState } from "react";
 
-
 const Navbar = () => {
   const { user, logOut } = useCustomeHook();
   const [toggle, setToggle] = useState(true);
@@ -73,7 +72,7 @@ const Navbar = () => {
                   ? "text-[#FE834C] font-bold underline"
                   : "text-black font-bold"
               }
-              to={"/My-Assignment"}
+              to={`/My-Assignment`}
             >
               My Assignment
             </NavLink>
@@ -99,7 +98,6 @@ const Navbar = () => {
     </>
   );
 
-
   return (
     <div className="bg-[#FE834C33]">
       <div className="w-[95%] mx-auto">
@@ -107,34 +105,32 @@ const Navbar = () => {
           <div className="navbar-start gap-2 md:gap-4 lg:w-[40%]">
             <div className="dropdown  ">
               <div onClick={handleToggle}>
-
-              <label
-              onClick={handleToggle}
-                tabIndex={0}
-                className=" text-[#FE834C]  lg:hidden"
-              >
-               
-                {!toggle ? (
-                  <>
-                    <h1 className="text-xl">X</h1>
-                  </>
-                ) : (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M4 6h16M4 12h8m-8 6h16"
-                    />
-                  </svg>
-                )}
-              </label>
+                <label
+                  onClick={handleToggle}
+                  tabIndex={0}
+                  className=" text-[#FE834C]  lg:hidden"
+                >
+                  {!toggle ? (
+                    <>
+                      <h1 className="text-xl">X</h1>
+                    </>
+                  ) : (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M4 6h16M4 12h8m-8 6h16"
+                      />
+                    </svg>
+                  )}
+                </label>
               </div>
               {!toggle ? (
                 <ul
@@ -186,21 +182,16 @@ const Navbar = () => {
           <div className="navbar-end">
             {user != null ? (
               user?.photoURL ? (
-                <img
-                  className={`w-[20%] md:w-[10%] border-0 rounded-full mr-3`}
-                  src={user.photoURL}
-                  alt="User"
-                />
+                <a className="w-[4rem] md:w-[3rem]" href="#" title={userName}>
+                  <img
+                    className={`w-[66%] md:w-[84%] border-0 rounded-full mr-3`}
+                    src={user.photoURL}
+                    alt="User"
+                  />
+                </a>
               ) : (
                 <BsPersonCircle className="text-4xl border-0 mr-3"></BsPersonCircle>
               )
-            ) : (
-              ""
-            )}
-            {user != null ? (
-              <button className="btn hidden lg:flex mr-1 text-white border-[2px] border-[#FE834C] bg-[#FE834C]">
-                {userName}
-              </button>
             ) : (
               ""
             )}
@@ -209,17 +200,25 @@ const Navbar = () => {
             {user != null ? (
               <button
                 onClick={handleLogout}
-                className="btn btn-sm md:btn-md text-white border-[2px] border-[#FE834C] bg-[#FE834C]"
+                className="btn btn-sm  text-white border-[2px] border-[#FE834C] bg-[#FE834C]"
               >
                 Logout
               </button>
             ) : (
-              <Link
-                to={"/logins"}
-                className="btn btn-sm md:btn-md text-white border-[2px] border-[#FE834C] bg-[#FE834C]"
-              >
-                Login
-              </Link>
+              <>
+                <Link
+                  to={"/logins"}
+                  className="mr-4 btn btn-sm  text-white border-[2px] border-[#FE834C] bg-[#FE834C]"
+                >
+                  Login
+                </Link>
+                <Link
+                  to={"/Resister"}
+                  className="btn btn-sm  text-white border-[2px] border-[#FE834C] bg-[#FE834C]"
+                >
+                  Resister
+                </Link>
+              </>
             )}
           </div>
         </div>

@@ -1,8 +1,7 @@
-import { useLoaderData } from "react-router-dom";
+import {  useLoaderData } from "react-router-dom";
 
 const SubmittedAssignment = () => {
   const SubmittedAssignment = useLoaderData();
-  console.log(SubmittedAssignment.length);
   if (SubmittedAssignment.length > 0) {
     return (
       <div className="w-[85%] mx-auto my-20">
@@ -10,9 +9,9 @@ const SubmittedAssignment = () => {
           {SubmittedAssignment?.map((assignment) => (
             <div
               key={assignment._id}
-              className="md:card md:flex-row md:w-[38rem] h-80 card-side bg-base-100 hover:shadow-xl border-2"
+              className="md:card md:flex-row md:w-[38rem]  card-side bg-base-100 hover:shadow-xl border-2"
             >
-              <div className="card-body">
+              <div className="card-body w-[100%]">
                 <h2 className="text-3xl font-bold text-center mb-2 underline">
                   {assignment.Tittle ? assignment.Tittle : "Nothing"}
                 </h2>
@@ -27,7 +26,7 @@ const SubmittedAssignment = () => {
 
                 {/* Modal Opened */}
 
-                <dialog id="my_modal_3" className="modal">
+                <dialog id={assignment._id} className="modal">
                   <div className="modal-box">
                     <form method="dialog">
                       <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
@@ -41,8 +40,8 @@ const SubmittedAssignment = () => {
                       <p className="text-2xl font-bold">
                         <span className="text-lg font-semibold">
                           Assignment Link:
-                        </span>{" "}
-                        {assignment.Url}
+                        </span>
+                        <a href={assignment?.Url} target="blank">{assignment?.Url}</a>
                       </p>
                       <p className="text-xl font-bold">
                         <span className="text-lg font-semibold">
@@ -70,6 +69,7 @@ const SubmittedAssignment = () => {
                           id="Textarea"
                           className="textarea textarea-bordered w-full"
                           placeholder="Enter your feedback here ..."
+                          required
                         ></textarea>
                       </label>
                       <div className="flex justify-center items-center mt-10">
@@ -88,7 +88,7 @@ const SubmittedAssignment = () => {
 
                 <button
                   onClick={() =>
-                    document.getElementById("my_modal_3").showModal()
+                    document.getElementById(`${assignment._id}`).showModal()
                   }
                   className="btn bg-[#FE834C] mt-5 text-white font-bold"
                 >

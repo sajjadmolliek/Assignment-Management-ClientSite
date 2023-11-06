@@ -37,6 +37,7 @@ const Routes = createBrowserRouter([
       {
         path: "/My-Assignment",
         element: <PrivateRoute><MyAssignment></MyAssignment></PrivateRoute>,
+        // loader:()=>fetch(`http://localhost:5006/SubmitAssignmentQuery`),
        
       },
       {
