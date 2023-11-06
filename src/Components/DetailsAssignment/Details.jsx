@@ -1,39 +1,39 @@
 import { useLoaderData } from "react-router-dom";
-// import Swal from "sweetalert2";
 import useCustomeHook from "../../Hooks/useCustomeHook";
 import axios from "axios";
-import Swal from "sweetalert2";
-import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 const Details = () => {
   // const { id } = useParams();
   const Assignments = useLoaderData();
   const { user } = useCustomeHook();
   const currentUser = user.email;
+  const SubmitterName = user.displayName;
   const { _id, PostedUser, Tittle, level, Marks, Date, description, photo } =
     Assignments;
-  // const fullForm = {name,brand_name,type,price,description,rating,photo,}
-  const [from, setFrom] = useState({});
-  const [valueFrom, setvalueFrom] = useState({});
+ 
+ 
 
   const handleSubmitButton = (e) => {
     e.preventDefault();
     const form = e.target;
     const Url = form.Url.value;
     const Note = document.getElementById("Textarea").value;
-    const assignmentSubmitData = { currentUser, Url, Note };
-    setFrom(assignmentSubmitData);
-    setvalueFrom(form);
-  };
-  
-  axios.post("http://localhost:5006/SubmitAssignment", from).then((data) => {
+    const assignmentSubmitData = { currentUser,Tittle,Marks,SubmitterName, Url, Note };
+
+    axios.post("http://localhost:5006/SubmitAssignment", assignmentSubmitData).then((data) => {
     if (data.data.acknowledged) {
-      valueFrom.reset();
-      Swal.fire("Yeahh!", "Successfully added product", "success");
+      form.reset();
+      toast.success(" Assignment Submitted Successfully");
     } else {
-      Swal.fire("OPPS!!", "Failed to add the product", "error");
+      toast.error("Failed to add the product");
     }
   });
+  };
+  
+  
 
   return (
     <div>
@@ -69,6 +69,7 @@ const Details = () => {
                       type="text"
                       placeholder="Upload Your Assignment Google Drive Link"
                       className="input input-bordered w-full"
+                      required
                     />
                   </label>
                   <label className="input-group md:w-4/5 lg:w-full mx-auto input-group-md">
@@ -112,6 +113,7 @@ const Details = () => {
           </div>
         </div>
       </div>
+                <ToastContainer />
     </div>
   );
 };

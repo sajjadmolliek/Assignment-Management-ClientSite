@@ -9,6 +9,7 @@ const CreateAssignment = () => {
   const [level, setLevel] = useState("Easy");
   const { user } = useCustomeHook();
   const PostedUser = user.email;
+  
 
   const handleChangePage = (e) => {
     setLevel(e.target.value);
@@ -32,6 +33,7 @@ const CreateAssignment = () => {
       description,
       photo,
       startDate,
+      
     };
     const isNotEmpty = Object.values(fullForm).some((value) => value === "");
 

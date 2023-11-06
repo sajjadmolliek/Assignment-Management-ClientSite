@@ -101,7 +101,7 @@ const Navbar = () => {
 
 
   return (
-    <div className="top-0 sticky z-50 bg-[#FE834C33]">
+    <div className="bg-[#FE834C33]">
       <div className="w-[95%] mx-auto">
         <div className="navbar col-span-1 justify-center ">
           <div className="navbar-start gap-2 md:gap-4 lg:w-[40%]">
