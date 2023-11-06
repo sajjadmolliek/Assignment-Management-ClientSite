@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const GiveMarks = () => {
   const SubmittedAssignment = useLoaderData();
+  const navigate = useNavigate()
   const { _id, Url, Note, Marks } = SubmittedAssignment;
 
   const handleSubmitButton = (e) => {
@@ -21,6 +22,7 @@ console.log(assignmentSubmitData);
         if (data.data.acknowledged) {
           form.reset();
           toast.success(" Assignment Submitted Successfully");
+          navigate("/My-Assignment")
         } else {
           toast.error("Failed to add the product");
         }
