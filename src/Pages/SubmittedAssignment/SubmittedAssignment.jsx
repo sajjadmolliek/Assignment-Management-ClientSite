@@ -24,12 +24,6 @@ const SubmittedAssignment = () => {
                   <span className="text-lg font-semibold">Total Marks:</span>{" "}
                   {assignment.Marks}
                 </p>
-                <p className="text-2xl font-bold">
-                  <span className="text-lg font-semibold">
-                    Assignment Link:
-                  </span>{" "}
-                  {assignment.Url}
-                </p>
 
                 {/* Modal Opened */}
 
@@ -40,29 +34,42 @@ const SubmittedAssignment = () => {
                         ✕
                       </button>
                     </form>
-                    <form 
-                    // onSubmit={handleSubmitButton} 
-                    className="my-10">
-                      <label className="input-group md:w-4/5 lg:w-full mx-auto input-group-md mb-8">
+                    <form
+                      // onSubmit={handleSubmitButton}
+                      className="my-10"
+                    >
+                      <p className="text-2xl font-bold">
+                        <span className="text-lg font-semibold">
+                          Assignment Link:
+                        </span>{" "}
+                        {assignment.Url}
+                      </p>
+                      <p className="text-xl font-bold">
+                        <span className="text-lg font-semibold">
+                          Note:
+                        </span>{" "}
+                        {assignment.Note}
+                      </p>
+                      <label className="input-group md:w-4/5 lg:w-full mx-auto input-group-md my-8">
                         <span className="w-[10rem] bg-[#FE834C] text-white font-bold">
-                          Url
+                          Give Marks
                         </span>
                         <input
-                          name="Url"
+                          name="givenMarks"
                           type="text"
-                          placeholder="Upload Your Assignment Google Drive Link"
+                          placeholder={`given Marks Out Of ${assignment.Marks}`}
                           className="input input-bordered w-full"
                           required
                         />
                       </label>
                       <label className="input-group md:w-4/5 lg:w-full mx-auto input-group-md">
                         <span className="w-[10rem] bg-[#FE834C] text-white font-bold">
-                          Note
+                          Feedback
                         </span>
                         <textarea
                           id="Textarea"
                           className="textarea textarea-bordered w-full"
-                          placeholder="Enter your text here ..."
+                          placeholder="Enter your feedback here ..."
                         ></textarea>
                       </label>
                       <div className="flex justify-center items-center mt-10">
@@ -85,7 +92,7 @@ const SubmittedAssignment = () => {
                   }
                   className="btn bg-[#FE834C] mt-5 text-white font-bold"
                 >
-                  Check
+                  Give Marks
                 </button>
               </div>
             </div>
