@@ -1,19 +1,18 @@
 import { useLoaderData } from "react-router-dom";
 import useCustomeHook from "../../Hooks/useCustomeHook";
-import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import useAxiosHook from "../../Hooks/AxiosHook/useAxiosHook";
 
 const Details = () => {
   // const { id } = useParams();
   const Assignments = useLoaderData();
   const { user } = useCustomeHook();
+  const axiosSecure = useAxiosHook();
   const currentUser = user.email;
   const SubmitterName = user.displayName;
   const { _id, PostedUser, Tittle, level, Marks, Date, description, photo } =
     Assignments;
-
 
   const handleSubmitButton = (e) => {
     e.preventDefault();
@@ -29,16 +28,15 @@ const Details = () => {
       Note,
     };
 
-    axios
-      .post("http://localhost:5006/SubmitAssignment", assignmentSubmitData)
-      .then((data) => {
-        if (data.data.acknowledged) {
-          form.reset();
-          toast.success(" Assignment Submitted Successfully");
-        } else {
-          toast.error("Failed to add the product");
-        }
-      });
+    const link = "/SubmitAssignment";
+    axiosSecure.post(link, assignmentSubmitData).then((data) => {
+      if (data.data.acknowledged) {
+        form.reset();
+        toast.success(" Assignment Submitted Successfully");
+      } else {
+        toast.error("Failed to add the product");
+      }
+    });
   };
 
   return (

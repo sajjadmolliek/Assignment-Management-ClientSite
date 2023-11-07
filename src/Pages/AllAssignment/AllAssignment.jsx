@@ -1,23 +1,22 @@
 import { useEffect, useState } from "react";
-// import AssignmentCard from "../../Components/AssignmentCard/AssignmentCard";
-import axios from "axios";
 import useCustomeHook from "../../Hooks/useCustomeHook";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
+import useAxiosHook from "../../Hooks/AxiosHook/useAxiosHook";
 
 const AllAssignment = () => {
   const [levelValue, setLevelValue] = useState("All");
   const [level, setLevel] = useState("All");
   const [assignments, setAssignments] = useState([]);
   const { user } = useCustomeHook();
+  const axiosSecure = useAxiosHook();
   const currentUser = user?.email || "No user";
 
   // data loading By Query
+  const link1 = `/AddAssignmentQuery?level=${level}`;
   useEffect(() => {
-    axios
-      .get(`http://localhost:5006/AddAssignmentQuery?level=${level}`)
-      .then((data) => setAssignments(data.data));
-  }, [level]);
+    axiosSecure.get(link1).then((data) => setAssignments(data.data));
+  }, [axiosSecure, level, link1]);
 
   // Level change to find by query
   const handleChangeLevel = (e) => {
@@ -39,22 +38,18 @@ const AllAssignment = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios
-          .delete(`http://localhost:5006/delete/${id}`, id, {
-            withCredentials: true,
-          })
-          .then((data) => {
-            const remain = assignments.filter((datas) => datas._id !== id);
-            if (data.data.acknowledged) {
-              setAssignments(remain);
-              Swal.fire("Deleted!", "Your file has been deleted.", "success");
-            }
-          });
+        const link2 = `/delete/${id}`;
+        axiosSecure.delete(link2, id).then((data) => {
+          const remain = assignments.filter((datas) => datas._id !== id);
+          if (data.data.acknowledged) {
+            setAssignments(remain);
+            Swal.fire("Deleted!", "Your file has been deleted.", "success");
+          }
+        });
       }
     });
   };
 
-  // desable Delete Button WIth SweetAlert
 
   // desable Delete Button WIth SweetAlert
   const desableDeleteBttn = () => {
@@ -100,13 +95,19 @@ const AllAssignment = () => {
         <div className="w-[85%] mx-auto my-20">
           <div className="products-container lg:w-[80rem] grid grid-cols-1 lg:grid-cols-2 gap-20">
             {assignments?.map((assignment) => (
-              <div key={assignment._id} className="md:card md:flex-row  card-side bg-base-100 shadow-xl">
+              <div
+                key={assignment._id}
+                className="md:card md:flex-row  card-side bg-base-100 shadow-xl"
+              >
                 <figure>
                   <img src={assignment.photo} alt="Assignment" />
                 </figure>
                 <div className="card-body">
-                  <h2 className="card-title">{assignment.Tittle}
-                  <div className="badge bg-[#FE834C] text-white p-3">{assignment.level}</div>
+                  <h2 className="card-title">
+                    {assignment.Tittle}
+                    <div className="badge bg-[#FE834C] text-white p-3">
+                      {assignment.level}
+                    </div>
                   </h2>
                   <p>Total Marks: {assignment.Marks}</p>
                   <p>Last Date: {assignment.Date} at 11:59pm</p>

@@ -1,12 +1,11 @@
-import axios from "axios";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { useLoaderData, } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import useAxiosHook from "../../Hooks/AxiosHook/useAxiosHook";
 
 const GiveMarks = () => {
   const SubmittedAssignment = useLoaderData();
-  const navigate = useNavigate();
+  const axiosSecure = useAxiosHook();
   const { _id, Url, Note, Marks } = SubmittedAssignment;
 
   const handleSubmitButton = (e) => {
@@ -15,22 +14,18 @@ const GiveMarks = () => {
     const ObtainMarks = form.givenMarks.value;
     const Feedback = document.getElementById("Textarea").value;
     const assignmentSubmitData = { ObtainMarks, Feedback };
-    console.log(assignmentSubmitData);
-    axios
-      .patch(
-        `http://localhost:5006/SubmitAssignment/${_id}`,
-        assignmentSubmitData
-      )
-      .then((data) => {
-        if (data.data.acknowledged) {
-          form.reset();
-          toast.success(" Given Marks Successfully");
-        } else {
-          toast.error("Failed To Give Marks");
-        }
-      });
-  };
 
+    const link = `/SubmitAssignment/${_id}`;
+    axiosSecure.patch(link, assignmentSubmitData)
+    .then((data) => {
+      if (data.data.acknowledged) {
+        form.reset();
+        toast.success(" Given Marks Successfully");
+      } else {
+        toast.error("Failed To Give Marks");
+      }
+    });
+  };
 
   return (
     <form

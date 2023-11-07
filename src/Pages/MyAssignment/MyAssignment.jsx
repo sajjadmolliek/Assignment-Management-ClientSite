@@ -1,17 +1,18 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import useCustomeHook from "../../Hooks/useCustomeHook";
 import { SyncLoader } from "react-spinners";
+import useAxiosHook from "../../Hooks/AxiosHook/useAxiosHook";
 
 const MyAssignment = () => {
   const { user } = useCustomeHook();
   const [myAssignmentData, setMyAssignmentData] = useState([]);
+  const axiosSecure = useAxiosHook();
 
+  // TO get After Given Marks Assignment Data
+  const link = `/SubmitAssignmentQuery?email=${user.email}`;
   useEffect(() => {
-    axios
-      .get(`http://localhost:5006/SubmitAssignmentQuery?email=${user.email}`)
-      .then((data) => setMyAssignmentData(data.data));
-  }, [user.email]);
+    axiosSecure.get(link).then((data) => setMyAssignmentData(data.data));
+  }, [axiosSecure, link]);
 
   if (myAssignmentData.length < 1) {
     return (
@@ -22,7 +23,6 @@ const MyAssignment = () => {
       </div>
     );
   } else {
-    
     return (
       <div className="w-[85%] mx-auto my-20">
         <div className="products-container items-center justify-center grid grid-cols-1 lg:grid-cols-2 gap-20">
@@ -40,22 +40,40 @@ const MyAssignment = () => {
                   {assignment.SubmitterName}
                 </p>
                 <p className="text-2xl font-bold">
-                  <span className="text-lg font-semibold">Assignment Marks:</span>{" "}
+                  <span className="text-lg font-semibold">
+                    Assignment Marks:
+                  </span>{" "}
                   {assignment.Marks}
                 </p>
                 <p className="text-2xl font-bold">
                   <span className="text-lg font-semibold">Obtain Marks:</span>{" "}
-                  {assignment?.ObtainMarks? assignment?.ObtainMarks: "Result Not Published Yet"}
+                  {assignment?.ObtainMarks
+                    ? assignment?.ObtainMarks
+                    : "Result Not Published Yet"}
                 </p>
                 <p className="text-2xl font-bold">
                   <span className="text-lg font-semibold">
                     Assignment Status:
                   </span>{" "}
-                  {assignment?.ObtainMarks? "Complete" : <><p className="inline mr-3">Pending</p><SyncLoader style={{ display: 'inline' }} /></>} 
+                  {assignment?.ObtainMarks ? (
+                    "Complete"
+                  ) : (
+                    <>
+                      <p className="inline mr-3">Pending</p>
+                      <SyncLoader style={{ display: "inline" }} />
+                    </>
+                  )}
                 </p>
                 <p className="text-2xl font-bold">
                   <span className="text-lg font-semibold">Feedback:</span>{" "}
-                  {assignment?.Feedback? assignment?.Feedback: <><p className="inline mr-3">Pending</p><SyncLoader style={{ display: 'inline' }} /></>}
+                  {assignment?.Feedback ? (
+                    assignment?.Feedback
+                  ) : (
+                    <>
+                      <p className="inline mr-3">Pending</p>
+                      <SyncLoader style={{ display: "inline" }} />
+                    </>
+                  )}
                 </p>
               </div>
             </div>

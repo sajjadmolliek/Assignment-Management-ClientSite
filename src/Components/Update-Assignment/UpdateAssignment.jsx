@@ -4,7 +4,7 @@ import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import useCustomeHook from "../../Hooks/useCustomeHook";
-import axios from "axios";
+import useAxiosHook from "../../Hooks/AxiosHook/useAxiosHook";
 
 const UpdateAssignment = () => {
   const Assignments = useLoaderData();
@@ -14,6 +14,7 @@ const UpdateAssignment = () => {
   const [updateDate, setStartDate] = useState(date);
   const [updateLevel, setUpdateLevel] = useState(level);
   const { user } = useCustomeHook();
+  const axiosSecure = useAxiosHook();
   const PostedUser = user.email;
   const navigate = useNavigate()
 
@@ -32,7 +33,8 @@ const UpdateAssignment = () => {
     const startDate = updateDate;
     const fullForm = {PostedUser,Tittle,level,Marks,Date,description,photo,startDate};
   
-    axios.patch(`http://localhost:5006/details/${_id}`,fullForm)
+    const link = `/details/${_id}`
+    axiosSecure.patch(link,fullForm)
       .then((res) => {
         if (res.data.modifiedCount > 0) {
           form.reset();

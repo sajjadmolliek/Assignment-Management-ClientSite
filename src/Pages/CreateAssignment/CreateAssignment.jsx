@@ -3,12 +3,13 @@ import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import useCustomeHook from "../../Hooks/useCustomeHook";
-import axios from "axios";
+import useAxiosHook from "../../Hooks/AxiosHook/useAxiosHook";
 
 const CreateAssignment = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [level, setLevel] = useState("Easy");
   const { user } = useCustomeHook();
+  const axiosSecure = useAxiosHook();
   const PostedUser = user.email;
   
 
@@ -39,7 +40,8 @@ const CreateAssignment = () => {
     const isNotEmpty = Object.values(fullForm).some((value) => value === "");
 
     if (!isNotEmpty) {
-      axios.post(`http://localhost:5006/AddAssignment`,fullForm)
+      const link = `/AddAssignment`
+      axiosSecure.post(link,fullForm)
       .then((res) => {
         if (res.data.acknowledged) {
           form.reset();
