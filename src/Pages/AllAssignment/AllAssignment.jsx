@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import useAxiosHook from "../../Hooks/AxiosHook/useAxiosHook";
 
+
 const AllAssignment = () => {
   const [levelValue, setLevelValue] = useState("All");
   const [level, setLevel] = useState("All");
@@ -11,9 +12,20 @@ const AllAssignment = () => {
   const { user } = useCustomeHook();
   const axiosSecure = useAxiosHook();
   const currentUser = user?.email || "No user";
+  //  <---------------Work For Pagination------------->
+  const [count, setCount] = useState(0);
+
+  const [itemsPerPage, setItemsPerPage] = useState(4);
+  const [currentPage, setCurrentPage] = useState(1);
+  const numberOfPage = Math.ceil(count / itemsPerPage);
+  const pages = [];
+  for (let i = 1; i < numberOfPage + 1; i++) {
+    pages.push(i);
+  }
+  //  <---------------End Work For Pagination------------->
 
   // data loading By Query
-  const link1 = `/AddAssignmentQuery?level=${level}`;
+  const link1 = `/AddAssignmentQuery?level=${level}&page=${currentPage}&size=${itemsPerPage}`;
   useEffect(() => {
     axiosSecure.get(link1).then((data) => setAssignments(data.data));
   }, [axiosSecure, level, link1]);
@@ -50,7 +62,6 @@ const AllAssignment = () => {
     });
   };
 
-
   // desable Delete Button WIth SweetAlert
   const desableDeleteBttn = () => {
     Swal.fire(
@@ -60,6 +71,36 @@ const AllAssignment = () => {
     );
   };
 
+  //  <---------------Work For Pagination------------->
+
+  useEffect(() => {
+    fetch(`http://localhost:5006/AddAssignmentCount`)
+      .then((res) => res.json())
+      .then((data) => setCount(data.count));
+  }, []);
+
+  const handleChangePage = (e) => {
+    const valueOfChangePage = parseInt(e.target.value);
+    setItemsPerPage(valueOfChangePage);
+    setCurrentPage(1);
+  };
+  const handlePageClick = (page) => {
+    setCurrentPage(page);
+  };
+  const handlePrevious = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+  const handleNext = () => {
+    if (currentPage < numberOfPage) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  //  <---------------End Work For Pagination------------->
+
+  console.log(pages);
   if (assignments.length == 0) {
     return (
       <div>
@@ -146,6 +187,30 @@ const AllAssignment = () => {
               </div>
             ))}
           </div>
+
+          {/* //  <--------------- Work For Pagination-------------> */}
+          <div className="pagination flex flex-wrap justify-center items-center mt-20">
+            <button onClick={handlePrevious} className="btn bg-[#FE834C] text-white mr-1">Previous</button>
+            <div className="mx-1 inline">
+            {pages?.map((page) => (
+              <button
+                className={page == currentPage ? "btn selected bg-[#2F0F00] text-white mx-2" : "btn bg-[#FE834C] text-white mx-2"}
+                onClick={() => handlePageClick(page)}
+                key={page}
+              >
+                {page}
+              </button>
+            ))}
+            </div>
+            <button onClick={handleNext} className="btn bg-[#FE834C] text-white mr-3 ml-1">Next</button>
+            <select value={itemsPerPage} onChange={handleChangePage} className="btn border-[#FE834C] hover:border-[#FE834C] bg-transparent hover:bg-transparent text-[#FE834C]">
+              <option value="4">4</option>
+              <option value="8">8</option>
+              <option value="12">12</option>
+            </select>
+          </div>
+
+          {/* //  <---------------End Work For Pagination-------------> */}
         </div>
       </div>
     );
