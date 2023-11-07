@@ -58,18 +58,13 @@ const AuthProvider = ({ children }) => {
 
       if (currentUser) {
         axios
-          .post("http://localhost:5006/jwt", sendingUser, {
+          .post("https://online-study-explore.vercel.app/jwt", sendingUser, {
             withCredentials: true,
           })
-          .then(() => {
-            // const maxAge = data.data.age;
-            // console.log(maxAge);
-            // const currentTime = new Date().getTime();
-            
-          });
+          .then(() => {});
       } else {
         axios
-          .post("http://localhost:5006/logout-jwt", sendingUser, {
+          .post("https://online-study-explore.vercel.app/logout-jwt", sendingUser, {
             withCredentials: true,
           })
           .then(() => {});

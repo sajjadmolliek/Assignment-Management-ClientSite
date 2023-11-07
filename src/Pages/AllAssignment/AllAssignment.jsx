@@ -93,7 +93,7 @@ const AllAssignment = () => {
         </select>
 
         <div className="w-[85%] mx-auto my-20">
-          <div className="products-container lg:w-[80rem] grid grid-cols-1 lg:grid-cols-2 gap-20">
+          <div className="products-container justify-center items-center lg:w-[80rem] grid grid-cols-1 lg:grid-cols-2 gap-20">
             {assignments?.map((assignment) => (
               <div
                 key={assignment._id}
