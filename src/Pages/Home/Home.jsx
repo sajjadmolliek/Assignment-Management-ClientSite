@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import Feature from "./Feature/Feature";
 
 const Home = () => {
   const containerVariants = {
@@ -13,7 +14,7 @@ const Home = () => {
 
   return (
     <div>
-      I am Home
+      <Feature></Feature>
 
       <motion.div
         variants={containerVariants}

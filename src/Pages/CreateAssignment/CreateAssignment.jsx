@@ -3,6 +3,7 @@ import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import useCustomeHook from "../../Hooks/useCustomeHook";
+import axios from "axios";
 
 const CreateAssignment = () => {
   const [startDate, setStartDate] = useState(new Date());
@@ -38,27 +39,25 @@ const CreateAssignment = () => {
     const isNotEmpty = Object.values(fullForm).some((value) => value === "");
 
     if (!isNotEmpty) {
-      fetch("http://localhost:5006/AddAssignment", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(fullForm),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.acknowledged) {
-            form.reset();
-            Swal.fire("Yeahh!", "Successfully added product", "success");
-          } else {
-            Swal.fire("OPPS!!","Failed to add the product","error");
-          }
-        });
+      axios.post(`http://localhost:5006/AddAssignment`,fullForm)
+      .then((res) => {
+        if (res.data.acknowledged) {
+          form.reset();
+          Swal.fire("Yeahh!", "Successfully added product", "success");
+        } else {
+          Swal.fire("OPPS!!","Failed to add the product","error");
+        }
+      });
     } else {
       Swal.fire("Opps!", "You should fill in the entire form", "error");
     }
   };
 
+
+
+
+
+ 
   return (
     <div>
       <h1 className="text-2xl md:text-3xl lg:text-5xl font-bold text-center mt-10 underline">

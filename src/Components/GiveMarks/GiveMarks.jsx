@@ -4,10 +4,9 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 
-
 const GiveMarks = () => {
   const SubmittedAssignment = useLoaderData();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { _id, Url, Note, Marks } = SubmittedAssignment;
 
   const handleSubmitButton = (e) => {
@@ -16,18 +15,22 @@ const GiveMarks = () => {
     const ObtainMarks = form.givenMarks.value;
     const Feedback = document.getElementById("Textarea").value;
     const assignmentSubmitData = { ObtainMarks, Feedback };
-console.log(assignmentSubmitData);
-    axios.patch(`http://localhost:5006/SubmitAssignment/${_id}`, assignmentSubmitData)
+    console.log(assignmentSubmitData);
+    axios
+      .patch(
+        `http://localhost:5006/SubmitAssignment/${_id}`,
+        assignmentSubmitData
+      )
       .then((data) => {
         if (data.data.acknowledged) {
           form.reset();
-          toast.success(" Assignment Submitted Successfully");
-          navigate("/My-Assignment")
+          toast.success(" Given Marks Successfully");
         } else {
-          toast.error("Failed to add the product");
+          toast.error("Failed To Give Marks");
         }
       });
   };
+
 
   return (
     <form

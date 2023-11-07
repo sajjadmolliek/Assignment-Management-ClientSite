@@ -4,6 +4,7 @@ import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import useCustomeHook from "../../Hooks/useCustomeHook";
+import axios from "axios";
 
 const UpdateAssignment = () => {
   const Assignments = useLoaderData();
@@ -31,16 +32,9 @@ const UpdateAssignment = () => {
     const startDate = updateDate;
     const fullForm = {PostedUser,Tittle,level,Marks,Date,description,photo,startDate};
   
-    fetch(`http://localhost:5006/details/${_id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(fullForm),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.modifiedCount > 0) {
+    axios.patch(`http://localhost:5006/details/${_id}`,fullForm)
+      .then((res) => {
+        if (res.data.modifiedCount > 0) {
           form.reset();
           Swal.fire("Yeahh!", "Successfully Update product", "success");
           navigate("/All-Assignment");

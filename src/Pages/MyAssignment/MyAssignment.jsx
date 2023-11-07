@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import useCustomeHook from "../../Hooks/useCustomeHook";
+import { SyncLoader } from "react-spinners";
 
 const MyAssignment = () => {
   const { user } = useCustomeHook();
@@ -50,11 +51,11 @@ const MyAssignment = () => {
                   <span className="text-lg font-semibold">
                     Assignment Status:
                   </span>{" "}
-                  {assignment?.ObtainMarks? "Complete" : "Pending"} 
+                  {assignment?.ObtainMarks? "Complete" : <><p className="inline mr-3">Pending</p><SyncLoader style={{ display: 'inline' }} /></>} 
                 </p>
                 <p className="text-2xl font-bold">
                   <span className="text-lg font-semibold">Feedback:</span>{" "}
-                  {assignment?.Feedback}
+                  {assignment?.Feedback? assignment?.Feedback: <><p className="inline mr-3">Pending</p><SyncLoader style={{ display: 'inline' }} /></>}
                 </p>
               </div>
             </div>
