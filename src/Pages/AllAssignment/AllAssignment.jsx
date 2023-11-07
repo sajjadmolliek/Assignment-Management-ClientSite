@@ -74,7 +74,7 @@ const AllAssignment = () => {
   //  <---------------Work For Pagination------------->
 
   useEffect(() => {
-    fetch(`http://localhost:5006/AddAssignmentCount`)
+    fetch(`https://online-study-explore.vercel.app/AddAssignmentCount`)
       .then((res) => res.json())
       .then((data) => setCount(data.count));
   }, []);
@@ -100,7 +100,7 @@ const AllAssignment = () => {
 
   //  <---------------End Work For Pagination------------->
 
-  if (assignments.length == 0) {
+  if (assignments.length === 0) {
     return (
       <div>
         <select

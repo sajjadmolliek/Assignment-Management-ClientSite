@@ -43,25 +43,25 @@ const Routes = createBrowserRouter([
       {
         path: "/Submitted-Assignment",
         element: <PrivateRoute><SubmittedAssignment></SubmittedAssignment></PrivateRoute>,
-        loader: ()=>fetch('https://online-study-explore.vercel.app/SubmitAssignment')
+        loader: ()=>fetch('https://online-study-explore.vercel.app/SubmitAssignment',{ credentials: "include" })
        
       },
       {
         path: "/details/:id",
         element: <PrivateRoute><Details></Details></PrivateRoute>,
-        loader:({params})=>fetch(`https://online-study-explore.vercel.app/details/${params.id}`),
+        loader:({params})=>fetch(`https://online-study-explore.vercel.app/details/${params.id}`,{ credentials: "include" }),
        
       },
       {
         path: "/GiveMarks/:id",
         element: <PrivateRoute><GiveMarks></GiveMarks></PrivateRoute>,
-        loader:({params})=>fetch(`https://online-study-explore.vercel.app/SubmitAssignment/${params.id}`),
+        loader:({params})=>fetch(`https://online-study-explore.vercel.app/SubmitAssignment/${params.id}`,{ credentials: "include" }),
        
       },
       {
         path: "/update/:id",
         element: <PrivateRoute><UpdateAssignment></UpdateAssignment></PrivateRoute>,
-        loader:({params})=>fetch(`https://online-study-explore.vercel.app/details/${params.id}`),
+        loader:({params})=>fetch(`https://online-study-explore.vercel.app/details/${params.id}`,{ credentials: "include" }),
        
       },
       {
