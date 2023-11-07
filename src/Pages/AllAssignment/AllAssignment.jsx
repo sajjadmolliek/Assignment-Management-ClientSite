@@ -100,7 +100,6 @@ const AllAssignment = () => {
 
   //  <---------------End Work For Pagination------------->
 
-  console.log(pages);
   if (assignments.length == 0) {
     return (
       <div>
