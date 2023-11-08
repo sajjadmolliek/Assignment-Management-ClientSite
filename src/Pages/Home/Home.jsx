@@ -22,29 +22,25 @@ const Home = () => {
       <Feature></Feature>
       <Faq></Faq>
 
-      <div className="bg-[#FE834C]">
-        <div className="w-[50%] mx-auto  ">
+      <div className="w-[50%] mx-auto  ">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
           <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
+            variants={textVariants}
+            initial="start"
+            animate="end"
+            transition={{
+              repeat: Infinity, // Infinitely repeat the animation
+              repeatType: "reverse", // Reverse the animation on each repeat
+              duration: 1, // Duration of each animation cycle
+            }}
           >
-            <motion.div
-              variants={textVariants}
-              initial="start"
-              animate="end"
-              transition={{
-                repeat: Infinity, // Infinitely repeat the animation
-                repeatType: "reverse", // Reverse the animation on each repeat
-                duration: 1, // Duration of each animation cycle
-              }}
-            >
-              <span className="text white">
-                This is an animated div with a copyright symbol: &copy;
-              </span>
-            </motion.div>
+            This is an animated div with a copyright symbol: &copy;
           </motion.div>
-        </div>
+        </motion.div>
       </div>
 
       <br />
