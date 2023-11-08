@@ -1,4 +1,6 @@
 import { motion } from "framer-motion";
+import { Reorder } from "framer-motion";
+import { useState } from "react";
 import Feature from "./Feature/Feature";
 import Faq from "./FAQ/FAQ";
 import Banner from "./Banner/Banner";
@@ -20,25 +22,30 @@ const Home = () => {
       <Feature></Feature>
       <Faq></Faq>
 
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="w-[50%]"
-      >
-        <motion.div
-          variants={textVariants}
-          initial="start"
-          animate="end"
-          transition={{
-            repeat: Infinity, // Infinitely repeat the animation
-            repeatType: "reverse", // Reverse the animation on each repeat
-            duration: 1, // Duration of each animation cycle
-          }}
-        >
-          This is an animated div with a copyright symbol: &copy;
-        </motion.div>
-      </motion.div>
+      <div className="bg-[#FE834C]">
+        <div className="w-[50%] mx-auto  ">
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            <motion.div
+              variants={textVariants}
+              initial="start"
+              animate="end"
+              transition={{
+                repeat: Infinity, // Infinitely repeat the animation
+                repeatType: "reverse", // Reverse the animation on each repeat
+                duration: 1, // Duration of each animation cycle
+              }}
+            >
+              <span className="text white">
+                This is an animated div with a copyright symbol: &copy;
+              </span>
+            </motion.div>
+          </motion.div>
+        </div>
+      </div>
 
       <br />
       <br />

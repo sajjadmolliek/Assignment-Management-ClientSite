@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import useAxiosHook from "../../Hooks/AxiosHook/useAxiosHook";
 
 
+
 const AllAssignment = () => {
   const [levelValue, setLevelValue] = useState("All");
   const [level, setLevel] = useState("All");
@@ -100,6 +101,7 @@ const AllAssignment = () => {
 
   //  <---------------End Work For Pagination------------->
 
+
   if (assignments.length === 0) {
     return (
       <div>
@@ -124,7 +126,7 @@ const AllAssignment = () => {
         <select
           value={levelValue}
           onChange={handleChangeLevel}
-          className="input input-bordered w-full"
+          className="input input-bordered w-full px-10"
         >
           <option value="All">All</option>
           <option value="Easy">Easy</option>
@@ -133,6 +135,7 @@ const AllAssignment = () => {
         </select>
 
         <div className="w-[85%] mx-auto my-20">
+       
           <div className="products-container justify-center items-center lg:w-[80rem] grid grid-cols-1 lg:grid-cols-2 gap-20">
             {assignments?.map((assignment) => (
               <div
@@ -189,20 +192,38 @@ const AllAssignment = () => {
 
           {/* //  <--------------- Work For Pagination-------------> */}
           <div className="pagination flex flex-wrap justify-center items-center mt-20">
-            <button onClick={handlePrevious} className="btn bg-[#FE834C] text-white mr-1">Previous</button>
+            <button
+              onClick={handlePrevious}
+              className="btn bg-[#FE834C] text-white mr-1"
+            >
+              Previous
+            </button>
             <div className="mx-1 inline">
-            {pages?.map((page) => (
-              <button
-                className={page == currentPage ? "btn selected bg-[#2F0F00] text-white mx-2" : "btn bg-[#FE834C] text-white mx-2"}
-                onClick={() => handlePageClick(page)}
-                key={page}
-              >
-                {page}
-              </button>
-            ))}
+              {pages?.map((page) => (
+                <button
+                  className={
+                    page == currentPage
+                      ? "btn selected bg-[#2F0F00] text-white mx-2"
+                      : "btn bg-[#FE834C] text-white mx-2"
+                  }
+                  onClick={() => handlePageClick(page)}
+                  key={page}
+                >
+                  {page}
+                </button>
+              ))}
             </div>
-            <button onClick={handleNext} className="btn bg-[#FE834C] text-white mr-3 ml-1">Next</button>
-            <select value={itemsPerPage} onChange={handleChangePage} className="btn border-[#FE834C] hover:border-[#FE834C] bg-transparent hover:bg-transparent text-[#FE834C]">
+            <button
+              onClick={handleNext}
+              className="btn bg-[#FE834C] text-white mr-3 ml-1"
+            >
+              Next
+            </button>
+            <select
+              value={itemsPerPage}
+              onChange={handleChangePage}
+              className="btn border-[#FE834C] hover:border-[#FE834C] bg-transparent hover:bg-transparent text-[#FE834C]"
+            >
               <option value="4">4</option>
               <option value="8">8</option>
               <option value="12">12</option>

@@ -46,7 +46,7 @@ const UpdateAssignment = () => {
 
   return (
     <div>
-      <h1 className="text-2xl md:text-3xl lg:text-5xl font-bold text-center mt-10 underline">
+      <h1 className="text-[#FE834C] text-2xl md:text-4xl font-bold text-center font-serif my-10">
         Updating Assignment{" "}
       </h1>
       <form
