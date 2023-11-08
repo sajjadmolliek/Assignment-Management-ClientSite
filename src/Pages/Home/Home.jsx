@@ -1,6 +1,4 @@
 import { motion } from "framer-motion";
-import { Reorder } from "framer-motion";
-import { useState } from "react";
 import Feature from "./Feature/Feature";
 import Faq from "./FAQ/FAQ";
 import Banner from "./Banner/Banner";
