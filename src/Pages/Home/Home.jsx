@@ -1,5 +1,7 @@
 import { motion } from "framer-motion";
 import Feature from "./Feature/Feature";
+import Faq from "./FAQ/FAQ";
+import Banner from "./Banner/Banner";
 
 const Home = () => {
   const containerVariants = {
@@ -14,7 +16,9 @@ const Home = () => {
 
   return (
     <div>
+      <Banner></Banner>
       <Feature></Feature>
+      <Faq></Faq>
 
       <motion.div
         variants={containerVariants}
@@ -36,7 +40,9 @@ const Home = () => {
         </motion.div>
       </motion.div>
 
-      <br /><br /><br />
+      <br />
+      <br />
+      <br />
     </div>
   );
 };
