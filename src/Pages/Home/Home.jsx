@@ -2,6 +2,8 @@ import { motion } from "framer-motion";
 import Feature from "./Feature/Feature";
 import Faq from "./FAQ/FAQ";
 import Banner from "./Banner/Banner";
+import PDFPreview from "../../Pdf/Pdf";
+import PDFViewer from "../../Pdf/Pdf";
 
 const Home = () => {
   const containerVariants = {
@@ -13,6 +15,8 @@ const Home = () => {
     start: { x: 0 },
     end: { x: 100 },
   };
+
+  // const pdfLink = 'https://www.example.com/sample.pdf';
 
   return (
     <div>
@@ -44,6 +48,28 @@ const Home = () => {
       <br />
       <br />
       <br />
+
+
+
+
+
+
+      {/* <div>
+      <h1>PDF Preview</h1>
+      <PDFPreview pdfLink={pdfLink} />
+    </div> */}
+
+
+<PDFViewer></PDFViewer>
+
+
+
+
+
+
+
+
+
     </div>
   );
 };

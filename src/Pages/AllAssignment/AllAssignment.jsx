@@ -16,7 +16,7 @@ const AllAssignment = () => {
   //  <---------------Work For Pagination------------->
   const [count, setCount] = useState(0);
 
-  const [itemsPerPage, setItemsPerPage] = useState(4);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
   const numberOfPage = Math.ceil(count / itemsPerPage);
   const pages = [];

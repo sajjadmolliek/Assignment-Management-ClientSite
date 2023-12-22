@@ -1,3 +1,4 @@
+
 import { motion, useAnimation, useScroll } from "framer-motion";
 import { useRef } from "react";
 
